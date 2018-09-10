@@ -72,12 +72,10 @@ class File extends Component {
     }
 
     handleSave = () => {
-        console.log("SAVE");
-        this.saveData();
+        this.updateFile();
     }
 
     handleAbort = () => {
-        console.log("ABORT");
         this.setState({
             edit: false,
             filename: this.props.data.filename,
@@ -87,15 +85,24 @@ class File extends Component {
     }
 
     handleRemove = () => {
-        console.log("REMOVE")
+        this.removeFile();
     }
 
-    async saveData() {
+    async updateFile() {
         let {status, json} = await API.changeFile(this.props.data.id, this.state.filename, this.state.info, this.state.viewedAt);
         if(status == 200 && json.hasOwnProperty("FMSuccess")) {
             this.setState({
                 edit: false
             });
+        } else {
+            // todo: Error Handling
+        }
+    }
+
+    async removeFile() {
+        let {status, json} = await API.deleteFile(this.props.data.id);
+        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+            this.props.onRemove();
         } else {
             // todo: Error Handling
         }

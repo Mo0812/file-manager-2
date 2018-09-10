@@ -58,6 +58,20 @@ class API {
         let json = await response.json();
         return {status, json};
     }
+
+    static async deleteFile(id) {
+        let {username, password} = this.__getUser();
+
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/file/' + id, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Basic " + btoa(username + ":" + password),
+            }
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json};
+    }
 }
 
 export default API;

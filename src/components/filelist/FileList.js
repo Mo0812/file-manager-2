@@ -64,7 +64,7 @@ class FileList extends Component {
                 <tbody>
                 {
                     files.map((file) => {
-                        return <File key={file.id} data={file}/>
+                        return <File key={file.id} data={file} onRemove={this.refreshFileList}/>
                     })
                 }
                 {
@@ -108,6 +108,14 @@ class FileList extends Component {
             uploadFiles: files,
             dropzoneActive: false
         });
+    }
+
+    /*
+    DATA SOURCE
+     */
+
+    refreshFileList = () => {
+        this.fetchData();
     }
 
     async fetchData() {
