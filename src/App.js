@@ -33,7 +33,7 @@ class App extends Component {
     renderLoggedIn() {
         return (
             <main className="main">
-                <Menu onClick={this.handleLogoutButton}/>
+                <Menu onClick={this.handleLogoutButton} />
                 <Container fluid>
                     <BrowserRouter>
                         <Switch>

@@ -9,5 +9,8 @@
 
   "menu.filelist": "Dateien",
   "menu.userlist": "Benutzer",
+  "menu.user.changepassword": "Passwort ändern",
+  "menu.user.faq": "FAQ",
+  "menu.user.contact": "Kontakt",
   "menu.logout": "Abmelden"
 }

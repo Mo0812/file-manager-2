@@ -1,5 +1,9 @@
 class API {
 
+    static getUsername() {
+        return localStorage.getItem("username") || "";
+    }
+
     static __getUser() {
         let username = localStorage.getItem("username") || "";
         let password = localStorage.getItem("password") || "";

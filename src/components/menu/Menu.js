@@ -12,6 +12,11 @@ import {Collapse,
     DropdownMenu,
     DropdownItem,
     Button } from 'reactstrap';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
+import API from '../../API';
+
+import './Menu.css';
 
 class Menu extends Component {
     constructor(props) {
@@ -23,35 +28,41 @@ class Menu extends Component {
     }
 
     render() {
+        let currentPath = window.location.pathname.split(/[/]/)[1];
+
         return (
-            <div>
+            <div className="main-navigation">
                 <Navbar color="light" light expand="md">
                     <NavbarBrand href="/">FileManager 2</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="mr-auto" navbar>
                             <NavItem>
-                                <NavLink href="/filelist"><FormattedMessage id="menu.filelist"/></NavLink>
+                                <NavLink href="/filelist" active={ currentPath == "filelist" ? true : false }><FormattedMessage id="menu.filelist"/></NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/userlist"><FormattedMessage id="menu.userlist"/></NavLink>
+                                <NavLink href="/userlist" active={ currentPath == "userlist" ? true : false }><FormattedMessage id="menu.userlist"/></NavLink>
                             </NavItem>
                         </Nav>
-                        <Nav navbar>
+                        <Nav navbar className="user-navigation">
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
-                                Options
+                                <FontAwesomeIcon icon={faUserAstronaut}/> {API.getUsername()}
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem>
-                                    Option 1
+                                    <FormattedMessage id="menu.user.changepassword"/>
+                                </DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem>
+                                    <FormattedMessage id="menu.user.faq"/>
                                 </DropdownItem>
                                 <DropdownItem>
-                                    Option 2
+                                    <FormattedMessage id="menu.user.contact"/>
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
-                        <Button color="danger" size="md" onClick={this.props.onClick}><FormattedMessage id="menu.logout"/></Button>
+                        <Button color="danger" size="md" className="logout" onClick={this.props.onClick}><FormattedMessage id="menu.logout"/></Button>
                         </Nav>
                     </Collapse>
                 </Navbar>
