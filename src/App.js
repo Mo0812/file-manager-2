@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {Container} from 'reactstrap';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
-import Login from './login/Login';
-import Menu from './menu/Menu';
-import FileList from './filelist/FileList';
-import UserList from "./userlist/UserList";
+import Login from './components/login/Login';
+import Menu from './components/menu/Menu';
+import FileList from './components/filelist/FileList';
+import UserList from "./components/userlist/UserList";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -32,7 +32,7 @@ class App extends Component {
         return (
             <main className="main">
                 <Menu onClick={this.handleLogoutButton}/>
-                <Container>
+                <Container fluid>
                     <BrowserRouter>
                         <Switch>
                             <Route exact path="/" component={FileList} />

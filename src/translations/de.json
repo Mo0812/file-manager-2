@@ -1,3 +1,13 @@
 {
-  "filelist.filename": "Dateiname"
+  "filelist.title": "Dateien",
+  "filelist.filename": "Dateiname",
+  "filelist.info": "Informationen",
+  "filelist.mime": "Typ",
+  "filelist.size": "Größe",
+  "filelist.viewedAt": "veröffentlicht am",
+  "filelist.date": "hochgeladen am",
+
+  "menu.filelist": "Dateien",
+  "menu.userlist": "Benutzer",
+  "menu.logout": "Abmelden"
 }

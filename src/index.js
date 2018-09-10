@@ -18,5 +18,5 @@ const localeMessages = {
 };
 const language = navigator.language.split(/[-_]/)[0];
 
-ReactDOM.render(<IntlProvider locale="en" messages={localeMessages['en']}><App /></IntlProvider>, document.getElementById('root'));
+ReactDOM.render(<IntlProvider locale={language} messages={localeMessages[language]}><App /></IntlProvider>, document.getElementById('root'));
 registerServiceWorker();

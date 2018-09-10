@@ -1,13 +1,22 @@
 import React, {Component} from 'react';
 import {Table} from 'reactstrap';
 import {FormattedMessage} from 'react-intl';
+import Dropzone from 'react-dropzone';
+
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faDownload} from "@fortawesome/free-solid-svg-icons";
+
+import File from './File';
+
+import './FileList.css';
 
 class FileList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            files: null
-
+            files: null,
+            uploadFiles: [],
+            dropzoneActive: false
         }
     }
 
@@ -21,46 +30,46 @@ class FileList extends Component {
         let files = this.state.files;
 
         return(
-            <section>
-                <h2>Filelist</h2>
-                {
-                    files !== null ?
-                        this.renderFilelist(files) :
-                        this.renderLoadingScreen()
-                }
+            <section className="fm-filelist">
+                <Dropzone className="fm-total-drop" onDrop={this.onDrop} onDragEnter={this.onDragEnter} onDragLeave={this.onDragLeave} disableClick>
+                    {this.state.dropzoneActive && <div className="fm-drop-overlay"><FontAwesomeIcon icon={faDownload} className="fm-drop-icon"/></div>}
+                    <h2><FormattedMessage id="filelist.title" /></h2>
+                    {
+                        files !== null ?
+                            this.renderFilelist(files) :
+                            this.renderLoadingScreen()
+                    }
+                </Dropzone>
             </section>
         );
     }
 
     renderFilelist(files) {
         return(
-            <Table striped>
+            <Table striped responsive>
                 <thead>
                 <tr>
                     <th>id</th>
-                    <th><FormattedMessage id="filelist.filename"/></th>
-                    <th>info</th>
-                    <th>mime</th>
-                    <th>size</th>
-                    <th>published at</th>
-                    <th>date</th>
+                    <th className="w-25"><FormattedMessage id="filelist.filename"/></th>
+                    <th className="w-25"><FormattedMessage id="filelist.info" /></th>
+                    <th><FormattedMessage id="filelist.mime" /></th>
+                    <th><FormattedMessage id="filelist.size" /></th>
+                    <th className="w-25"><FormattedMessage id="filelist.viewedAt" /></th>
+                    <th className="w-25"><FormattedMessage id="filelist.date" /></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {
                     files.map((file) => {
+                        return <File key={file.id} data={file}/>
+                    })
+                }
+                {
+                    this.state.uploadFiles.map((file) => {
                         return(
-                            <tr key={file.id}>
-                                <td>{file.id}</td>
-                                <td>{file.filename}</td>
-                                <td>{file.info}</td>
-                                <td>{file.mime}</td>
-                                <td>{file.size}</td>
-                                <td>{file.viewedAt}</td>
-                                <td>{file.date}</td>
-
-                            </tr>
-                        )
+                            <div>{file.name} - {file.size} bytes</div>
+                        );
                     })
                 }
                 </tbody>
@@ -76,8 +85,31 @@ class FileList extends Component {
         );
     }
 
+    /*
+    DROPZONE
+     */
+
+    onDragEnter = () => {
+        this.setState({
+            dropzoneActive: true
+        });
+    }
+
+    onDragLeave = () => {
+        this.setState({
+            dropzoneActive: false
+        });
+    }
+
+    onDrop = (files) => {
+        this.setState({
+            uploadFiles: files,
+            dropzoneActive: false
+        });
+    }
+
     async fetchData() {
-        await this.sleep(2000);
+        //await this.sleep(2000);
         let data = [
             {
                 "id": "774",
