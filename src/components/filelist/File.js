@@ -3,7 +3,7 @@ import filesize from "filesize/lib/filesize.es6";
 import {Input} from 'reactstrap';
 import API from '../../API';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faSave, faTrashAlt, faBan} from "@fortawesome/free-solid-svg-icons";
+import {faPen, faSave, faTrashAlt, faBan, faEye, faDownload} from "@fortawesome/free-solid-svg-icons";
 
 class File extends Component {
     constructor(props) {
@@ -51,6 +51,8 @@ class File extends Component {
                     <td>{fViewDate.toLocaleDateString(navigator.language, localeOptions)}</td>
                     <td>{fDate.toLocaleDateString(navigator.language, localeOptions)}</td>
                     <td>
+                        <a href={file.data} download={file.filename}><FontAwesomeIcon icon={faDownload} onClick={this.handleDownload}/></a>
+                        <FontAwesomeIcon icon={faEye} onClick={this.handlePreview}/>
                         <FontAwesomeIcon icon={faPen} onClick={this.handleEdit}/>
                         <FontAwesomeIcon icon={faTrashAlt} onClick={this.handleRemove}/>
                     </td>
@@ -63,6 +65,14 @@ class File extends Component {
         this.setState({
             [name]: event.target.value
         })
+    }
+
+    handleDownload = () => {
+
+    }
+
+    handlePreview = () => {
+        this.props.onFilePreview(this.props.data);
     }
 
     handleEdit = () => {

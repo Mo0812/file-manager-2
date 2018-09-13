@@ -9,6 +9,7 @@ import {faDownload} from "@fortawesome/free-solid-svg-icons";
 import API from '../../API';
 
 import File from './File';
+import FilePreview from "./FilePreview";
 
 import './FileList.css';
 
@@ -18,7 +19,9 @@ class FileList extends Component {
         this.state = {
             files: null,
             uploadFiles: [],
-            dropzoneActive: false
+            dropzoneActive: false,
+            filePreview: false,
+            filePreviewObject: null
         }
     }
 
@@ -41,6 +44,7 @@ class FileList extends Component {
                             this.renderLoadingScreen()
                     }
                 </Dropzone>
+                <FilePreview open={this.state.filePreview} close={this.closeFilePreview} data={this.state.filePreviewObject}/>
             </section>
         );
     }
@@ -63,7 +67,7 @@ class FileList extends Component {
                 <tbody>
                 {
                     files.map((file) => {
-                        return <File key={file.id} data={file} onRemove={this.refreshFileList}/>
+                        return <File key={file.id} data={file} onRemove={this.refreshFileList} onFilePreview={this.openFilePreview}/>
                     })
                 }
                 {
@@ -126,6 +130,23 @@ class FileList extends Component {
         } else {
             // todo: ERROR HANDLING
         }
+    }
+
+    /*
+    FILE PREVIEW
+     */
+
+    openFilePreview = (data) => {
+        this.setState({
+            filePreview: true,
+            filePreviewObject: data
+        });
+    }
+
+    closeFilePreview = () => {
+        this.setState({
+            filePreview: false
+        });
     }
 }
 
