@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import {Container} from 'reactstrap';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import LazyLoad from "react-lazy-load";
 
 import API from './API';
 
 import Login from './components/login/Login';
+import ForgotPassword from './components/forgotpassword/ForgotPassword';
 import Menu from './components/menu/Menu';
 import FileList from './components/filelist/FileList';
 import UserList from "./components/userlist/UserList";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import img from "./assets/bg.jpg";
 
 class App extends Component {
     constructor(props) {
@@ -48,13 +51,19 @@ class App extends Component {
     }
 
     renderLoggedOut() {
-      return(
-          <BrowserRouter>
-              <Switch>
-                  <Route path="/" component={() => <Login onClick={this.handleLoginButton}/>} />
-              </Switch>
-          </BrowserRouter>
-      );
+        return(
+            <Container className="fm-outside-container" fluid>
+                <LazyLoad>
+                    <img src={img} className="fm-bg-img"/>
+                </LazyLoad>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path="/" component={() => <Login onClick={this.handleLoginButton}/>} />
+                        <Route path="/forgotpassword" component={ForgotPassword} />
+                    </Switch>
+                </BrowserRouter>
+            </Container>
+        );
     }
 
     async handleAuth() {

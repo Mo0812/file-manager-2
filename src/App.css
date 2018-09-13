@@ -5,3 +5,33 @@ main.main {
 main.main .container-fluid, main.main .container {
     margin-top: 25px;
 }
+
+.fm-outside-container {
+}
+
+.fm-outside-container .fm-bg-img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.fm-outside-container .fm-outside-content {
+    width: 40vw;
+    margin: 150px 30vw;
+    text-align: center;
+    padding: 25px;
+}
+
+.fm-outside-container .fm-outside-content header {
+    margin: 15px 0 50px 0;
+}
+
+.fm-outside-container .fm-outside-content .fm-outside-content-submit {
+    margin: 5px 0 15px 0;
+}

@@ -12,5 +12,11 @@
   "menu.user.changepassword": "Change password",
   "menu.user.faq": "FAQ",
   "menu.user.contact": "Contact",
-  "menu.logout": "Logout"
+  "menu.logout": "Logout",
+
+  "login.username": "Username",
+  "login.password": "Password",
+  "login.forgotpassword": "Forgot password?",
+  "login.contact": "Contact us",
+  "login.submit": "Sign in"
 }
