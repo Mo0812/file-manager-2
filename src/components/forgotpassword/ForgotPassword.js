@@ -1,27 +1,14 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import LazyLoad from 'react-lazy-load';
-import {Container, Col, Jumbotron, Form, FormGroup, FormText, Button, Input, Label} from 'reactstrap';
-import sha1 from 'sha1';
+import {Container, Col, Form, FormGroup, FormText, Button, Input, Label} from 'reactstrap';
 
-import './Login.css';
-import img from '../../assets/bg.jpg';
-
-class Login extends Component {
+class ForgotPassword extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            username: "",
-            password: ""
-        }
     }
 
     render() {
         return (
-            <Container fluid className="fm-login-container">
-                <LazyLoad>
-                    <img src={img} className="fm-bg-img"/>
-                </LazyLoad>
                 <section className="fm-login">
                     <header>
                         <h1>FileManager 2</h1>
@@ -46,21 +33,8 @@ class Login extends Component {
                         </FormGroup>
                     </Form>
                 </section>
-            </Container>
         );
-    }
-
-    handleLogin = () => {
-        localStorage.setItem("username", this.state.username);
-        localStorage.setItem("password", sha1(this.state.password));
-        this.props.onClick();
-    }
-
-    handleChange = name => event => {
-        this.setState({
-            [name]: event.target.value
-        })
     }
 }
 
-export default Login;
+export default ForgotPassword;

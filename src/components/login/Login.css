@@ -1,0 +1,32 @@
+.fm-login-container {
+}
+
+.fm-login-container .fm-bg-img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.fm-login {
+    width: 40vw;
+    margin: 150px 30vw;
+    text-align: center;
+    padding: 25px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.fm-login header {
+    margin: 15px 0 50px 0;
+}
+
+.fm-login .fm-login-submit {
+    margin: 5px 0 15px 0;
+}
