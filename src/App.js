@@ -43,6 +43,7 @@ class App extends Component {
                             <Route exact path="/" component={FileList} />
                             <Route path="/filelist" component={FileList} />
                             <Route path="/userlist" component={UserList} />
+                            <Route path="*" component={FileList} />
                         </Switch>
                     </BrowserRouter>
                 </Container>
@@ -60,6 +61,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={() => <Login onClick={this.handleLoginButton}/>} />
                         <Route path="/forgotpassword" component={ForgotPassword} />
+                        <Route path="*" component={() => <Login onClick={this.handleLoginButton}/>} />
                     </Switch>
                 </BrowserRouter>
             </Container>

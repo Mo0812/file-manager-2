@@ -1,0 +1,7 @@
+.fm-userlist .table thead th {
+    border-top: none;
+}
+
+.fm-userlist .table .center {
+    text-align: center;
+}

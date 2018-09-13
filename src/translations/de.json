@@ -7,6 +7,15 @@
   "filelist.viewedAt": "veröffentlicht am",
   "filelist.date": "hochgeladen am",
 
+  "userlist.title": "Benutzer",
+  "userlist.username": "Benutzername",
+  "userlist.fullname": "Name",
+  "userlist.email": "Email",
+  "userlist.logged_in": "eingeloggt",
+  "userlist.rights": "Rechte",
+  "userlist.last_action": "zuletzt aktiv",
+  "userlist.expires": "Auslaufdatum",
+
   "menu.filelist": "Dateien",
   "menu.userlist": "Benutzer",
   "menu.user.changepassword": "Passwort ändern",

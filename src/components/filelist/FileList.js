@@ -28,7 +28,6 @@ class FileList extends Component {
     }
 
     render() {
-        console.log(this.state.files);
         let files = this.state.files;
 
         return(
