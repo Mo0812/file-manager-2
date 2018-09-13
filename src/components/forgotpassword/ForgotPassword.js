@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {FormattedText} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {Col, Form, FormGroup, FormText, Button, Input, Label} from 'reactstrap';
 import sha1 from 'sha1';
 
@@ -8,8 +8,7 @@ class ForgotPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
-            password: ""
+            email: "",
         }
     }
 
@@ -22,31 +21,23 @@ class ForgotPassword extends Component {
                 </header>
                 <Form>
                     <FormGroup row>
-                        <Label for="username" sm={2}>Username</Label>
-                        <Col sm={10}>
-                            <Input id="username" name="username" placeholder="Username" onChange={this.handleChange("username")}/>
+                        <Label for="username" sm={3}><FormattedMessage id="login.email"/></Label>
+                        <Col sm={9}>
+                            <Input id="email" name="email" placeholder="name@example.com" onChange={this.handleChange("email")}/>
                         </Col>
                     </FormGroup>
-                    <FormGroup row>
-                        <Label for="password" sm={2}>Password</Label>
-                        <Col sm={10}>
-                            <Input type="password" placeholder="Password" onChange={this.handleChange("password")}/>
-                        </Col>
-                    </FormGroup>
-                    <Button color="success" className="fm-outside-content-submit" onClick={this.handleLogin}>Anmelden</Button>
+                    <Button color="warning" className="fm-outside-content-submit" onClick={this.handleForgotPassword}><FormattedMessage id="login.reset"/></Button>
                     <FormGroup>
-                        <FormText><Link to="/forgotpassword"><FormattedText id="login.back_to_signin"/></Link></FormText>
-                        <FormText><Link to="/">Kontakt aufnehmen</Link></FormText>
+                        <FormText><Link to="/"><FormattedMessage id="login.back_to_signin"/></Link></FormText>
+                        <FormText><Link to="/contact"><FormattedMessage id="login.contact"/></Link></FormText>
                     </FormGroup>
                 </Form>
             </section>
         );
     }
 
-    handleLogin = () => {
-        localStorage.setItem("username", this.state.username);
-        localStorage.setItem("password", sha1(this.state.password));
-        this.props.onClick();
+    handleForgotPassword = () => {
+
     }
 
     handleChange = name => event => {

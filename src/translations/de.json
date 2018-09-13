@@ -15,9 +15,11 @@
   "menu.logout": "Abmelden",
 
   "login.username": "Benutzername",
+  "login.email": "Email",
   "login.password": "Passwort",
   "login.forgotpassword": "Password vergessen?",
   "login.contact": "Kontakt aufnehmen",
   "login.back_to_signin": "Zurück zum Login",
-  "login.submit": "Anmelden"
+  "login.submit": "Anmelden",
+  "login.reset": "Passwort zurücksetzen"
 }

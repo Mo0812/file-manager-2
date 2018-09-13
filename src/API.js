@@ -72,6 +72,22 @@ class API {
         let json = await response.json();
         return {status, json};
     }
+
+    static async forgotPasswort(email) {
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/password/forgot/', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+
+            },
+            body: JSON.stringify({
+                "email": email
+            })
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json}
+    }
 }
 
 export default API;
