@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button} from 'reactstrap';
+import {ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faSave, faTrashAlt, faBan} from "@fortawesome/free-solid-svg-icons";
 import {Input} from "reactstrap";
@@ -13,6 +13,7 @@ class User extends Component {
         super(props);
 
         this.state = {
+            dropdownOpen: false,
             edit: false,
             doubleApprove: false,
             firstname: this.props.data.firstname,
@@ -45,8 +46,7 @@ class User extends Component {
                     <td className="center">{fLastAction.isValid(fLastAction) ? fLastAction.toLocaleDateString(navigator.language, localeOptions) : "-"}</td>
                     <td className="center"><Input type="date" value={this.state.boomDate} onChange={this.handleChange("boomDate")}/></td>
                     <td>
-                        <FontAwesomeIcon icon={faSave} onClick={this.handleSave}/>{' '}
-                        <FontAwesomeIcon icon={faBan} onClick={this.handleAbort}/>
+                        {this.renderButtonsOnEdit()}
                     </td>
                 </tr>
             );
@@ -61,16 +61,57 @@ class User extends Component {
                     <td className="center">{fLastAction.isValid(fLastAction) ? fLastAction.toLocaleDateString(navigator.language, localeOptions) : "-"}</td>
                     <td className="center">{fBoomDate.isValid(fBoomDate) ? fBoomDate.toLocaleDateString(navigator.language, localeOptions) : "-"}</td>
                     <td className="center">
-                        <FontAwesomeIcon icon={faPen} onClick={this.handleEdit}/>{' '}
                         {
-                            this.state.doubleApprove ?
-                                <Button color="danger" size="sm" onClick={this.handleRemove}>Löschen</Button> :
-                                <FontAwesomeIcon icon={faTrashAlt} onClick={this.handleRemove}/>
+                            !this.state.doubleApprove ?
+                                this.renderButtonsDefault() :
+                                this.renderButtonsOnRemove()
                         }
+
                     </td>
                 </tr>
             );
         }
+    }
+
+    renderButtonsDefault() {
+        return(
+            <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} size="sm">
+                <DropdownToggle caret>
+                    Actions
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem onClick={this.handleResetPassword}>Passwort zurücksetzen</DropdownItem>
+                    <DropdownItem onClick={this.handleEdit}>Bearbeiten</DropdownItem>
+                    <DropdownItem onClick={this.handleRemove}>Löschen</DropdownItem>
+                </DropdownMenu>
+            </ButtonDropdown>
+        );
+    }
+
+    renderButtonsOnRemove() {
+        return(
+            <Button color="danger" size="sm">Löschen</Button>
+        );
+    }
+
+    renderButtonsOnEdit() {
+        return(
+            <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} size="sm">
+                <DropdownToggle caret>
+                    Actions
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem onClick={this.handleSave}>Speichern</DropdownItem>
+                    <DropdownItem onClick={this.handleAbort}>Abbrechen</DropdownItem>
+                </DropdownMenu>
+            </ButtonDropdown>
+        );
+    }
+
+    toggleDropdown = () => {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
     }
 
     handleChange = name => event => {
@@ -105,6 +146,10 @@ class User extends Component {
         }
     }
 
+    handleResetPassword = () => {
+        this.resetPassword();
+    }
+
     handleTotalClick = () => {
         if(this.state.doubleApprove) {
             this.setState({
@@ -126,6 +171,15 @@ class User extends Component {
 
     async removeUser() {
         let {status, json} = await API.deleteUser(this.props.data.id);
+        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+            this.props.onRemove();
+        } else {
+            // todo: Error Handling
+        }
+    }
+
+    async resetPassword() {
+        let {status, json} = await API.resetPassword(this.props.data.id);
         if(status == 200 && json.hasOwnProperty("FMSuccess")) {
             this.props.onRemove();
         } else {
