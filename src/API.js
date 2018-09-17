@@ -87,6 +87,64 @@ class API {
         return {status: status, json: json};
     }
 
+    static async createUser(firstname, lastname, email, rights, boomDate) {
+        let {username, password} = this.__getUser();
+
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/user', {
+            method: "POST",
+            headers: {
+                "Authorization": "Basic " + btoa(username + ":" + password),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "firstname": firstname,
+                "lastname": lastname,
+                "email": email,
+                "rights": rights,
+                "boom_date": boomDate
+            })
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json};
+    }
+
+    static async changeUser(id, firstname, lastname, email, rights, boomDate) {
+        let {username, password} = this.__getUser();
+
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/user/' + id, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Basic " + btoa(username + ":" + password),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "firstname": firstname,
+                "lastname": lastname,
+                "email": email,
+                "rights": rights,
+                "boom_date": boomDate
+            })
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json};
+    }
+
+    static async deleteUser(id) {
+        let {username, password} = this.__getUser();
+
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/user/' + id, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Basic " + btoa(username + ":" + password),
+            }
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json};
+    }
+
     static async forgotPasswort(email) {
         let response = await fetch('https://moritzkanzler.de/filemanager-rest/password/forgot/', {
             method: "POST",

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {Table} from 'reactstrap';
+import {Table, Button} from 'reactstrap';
 import {FormattedMessage} from 'react-intl';
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDownload} from "@fortawesome/free-solid-svg-icons";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 import API from '../../API';
 import User from './User';
+import NewUser from './NewUser';
 
 import './UserList.css';
 
@@ -15,7 +16,8 @@ class UserList extends Component {
         super(props);
 
         this.state = {
-            user: []
+            user: [],
+            new: false
         }
     }
 
@@ -27,7 +29,7 @@ class UserList extends Component {
     render() {
         return (
             <section className="fm-userlist">
-                <h2><FormattedMessage id="userlist.title" /></h2>
+                <h2><FormattedMessage id="userlist.title" />{' '}<Button onClick={this.newUser} color="secondary"><FontAwesomeIcon icon={faPlus}/></Button></h2>
                 {
                     this.state.user.length > 0 ?
                         this.renderUserlist(this.state.user) :
@@ -43,21 +45,22 @@ class UserList extends Component {
                 <thead>
                 <tr>
                     <th>id</th>
-                    <th><FormattedMessage id="userlist.username"/></th>
-                    <th><FormattedMessage id="userlist.fullname"/></th>
-                    <th><FormattedMessage id="userlist.email"/></th>
-                    <th className="w-25 center"><FormattedMessage id="userlist.logged_in"/></th>
+                    <th className="w-25"><FormattedMessage id="userlist.username"/></th>
+                    <th className="w-25"><FormattedMessage id="userlist.fullname"/></th>
+                    <th className="w-25"><FormattedMessage id="userlist.email"/></th>
                     <th className="w-25 center"><FormattedMessage id="userlist.rights"/></th>
                     <th className="center"><FormattedMessage id="userlist.last_action"/></th>
                     <th className="center"><FormattedMessage id="userlist.expires"/></th>
-                    <th></th>
+                    <th className="functions center"></th>
                 </tr>
                 </thead>
                 <tbody>
                 {
+                    this.state.new ? <NewUser onCreation={this.addUser} onAbort={this.abortUser}/> : null
+                }
+                {
                     user.map((singleUser) => {
-                        console.log(singleUser);
-                        return <User key={singleUser.id} data={singleUser} />
+                        return <User key={singleUser.id} data={singleUser} onRemove={this.refreshList}/>
                     })
                 }
                 </tbody>
@@ -71,6 +74,29 @@ class UserList extends Component {
                 User get loaded
             </div>
         );
+    }
+
+    /*
+    NEW USER
+     */
+
+    newUser = () => {
+        this.setState({
+            new: true
+        })
+    }
+
+    addUser = () => {
+        this.setState({
+            new: false
+        });
+        this.refreshList();
+    }
+
+    abortUser = () => {
+        this.setState({
+            new: false
+        });
     }
 
     /*

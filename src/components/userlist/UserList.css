@@ -5,3 +5,7 @@
 .fm-userlist .table .center {
     text-align: center;
 }
+
+.fm-userlist .table .functions {
+    min-width: 8rem;
+}
