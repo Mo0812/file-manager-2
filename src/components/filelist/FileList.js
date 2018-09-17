@@ -44,7 +44,7 @@ class FileList extends Component {
                             this.renderLoadingScreen()
                     }
                 </Dropzone>
-                <FilePreview open={this.state.filePreview} close={this.closeFilePreview} data={this.state.filePreviewObject}/>
+                <FilePreview open={this.state.filePreview} close={this.closeFilePreview} data={this.state.filePreviewObject} className="fm-file-preview"/>
             </section>
         );
     }

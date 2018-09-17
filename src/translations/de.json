@@ -7,6 +7,9 @@
   "filelist.viewedAt": "veröffentlicht am",
   "filelist.date": "hochgeladen am",
 
+  "filepreview.title": "Dateivorschau",
+  "filepreview.cancel": "Beenden",
+
   "userlist.title": "Benutzer",
   "userlist.username": "Benutzername",
   "userlist.fullname": "Name",
