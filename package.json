@@ -1,7 +1,8 @@
 {
   "name": "file-manager-2",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "private": true,
+  "homepage": "http://schulungv2.moritzkanzler.de",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
     "@fortawesome/free-solid-svg-icons": "^5.3.1",

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import filesize from "filesize/lib/filesize.es6";
+import filesize from "filesize/lib/filesize";
 import {Input, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button} from 'reactstrap';
 import API from '../../API';
 
