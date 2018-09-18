@@ -173,6 +173,7 @@ class User extends Component {
         let {status, json} = await API.deleteUser(this.props.data.id);
         if(status == 200 && json.hasOwnProperty("FMSuccess")) {
             this.props.onRemove();
+            this.props.onAlert("danger", "Benutzer erfolgreich gelöscht");
         } else {
             // todo: Error Handling
         }
