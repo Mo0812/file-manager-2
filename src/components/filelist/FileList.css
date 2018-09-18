@@ -21,3 +21,11 @@
 .fm-filelist .table thead th {
     border-top: none;
 }
+
+.fm-filelist .table .center {
+    text-align: center;
+}
+
+.fm-filelist .table .functions {
+    min-width: 8rem;
+}

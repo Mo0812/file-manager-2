@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import filesize from "filesize/lib/filesize.es6";
-import {Input} from 'reactstrap';
+import {Input, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button} from 'reactstrap';
 import API from '../../API';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faSave, faTrashAlt, faBan, faEye, faDownload} from "@fortawesome/free-solid-svg-icons";
 
 class File extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            dropdownOpen: false,
+            doubleApprove: false,
             edit: false,
             filename: this.props.data.filename,
             info: this.props.data.info,
@@ -35,14 +35,15 @@ class File extends Component {
                     <td><Input type="date" value={this.state.viewedAt} onChange={this.handleChange("viewedAt")}/></td>
                     <td>{fDate.toLocaleDateString(navigator.language, localeOptions)}</td>
                     <td>
-                        <FontAwesomeIcon icon={faSave} onClick={this.handleSave}/>
-                        <FontAwesomeIcon icon={faBan} onClick={this.handleAbort}/>
+                        {
+                            this.renderButtonsOnEdit()
+                        }
                     </td>
                 </tr>
             );
         } else {
             return (
-                <tr>
+                <tr onClick={this.handleTotalClick}>
                     <td>{file.id}</td>
                     <td>{this.state.filename}</td>
                     <td>{this.state.info}</td>
@@ -51,24 +52,67 @@ class File extends Component {
                     <td>{fViewDate.toLocaleDateString(navigator.language, localeOptions)}</td>
                     <td>{fDate.toLocaleDateString(navigator.language, localeOptions)}</td>
                     <td>
-                        <a href={file.data} download={file.filename}><FontAwesomeIcon icon={faDownload} onClick={this.handleDownload}/></a>
-                        <FontAwesomeIcon icon={faEye} onClick={this.handlePreview}/>
                         {
-                            API.checkRight("admin") ?
-                                (
-                                    <FontAwesomeIcon icon={faPen} onClick={this.handleEdit}/>
-                                ) : ""
-                        }
-                        {
-                            API.checkRight("admin") ?
-                                (
-                                    <FontAwesomeIcon icon={faTrashAlt} onClick={this.handleRemove}/>
-                                ) : ""
+                            !this.state.doubleApprove ?
+                                this.renderButtonsDefault(file) :
+                                this.renderButtonsOnRemove()
                         }
                     </td>
                 </tr>
             );
         }
+    }
+
+    renderButtonsDefault(file) {
+        return(
+            <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} size="sm">
+                <DropdownToggle caret>
+                    Actions
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem><a href={file.data} download={file.filename}>Download</a></DropdownItem>
+                    <DropdownItem onClick={this.handlePreview}>Vorschau</DropdownItem>
+                    {
+                        API.checkRight("admin") ?
+                            (
+                                <DropdownItem onClick={this.handleEdit}>Bearbeiten</DropdownItem>
+                            ) : ""
+                    }
+                    {
+                        API.checkRight("admin") ?
+                            (
+                                <DropdownItem onClick={this.handleRemove}>Löschen</DropdownItem>
+                            ) : ""
+                    }
+                </DropdownMenu>
+            </ButtonDropdown>
+        );
+    }
+
+    renderButtonsOnRemove() {
+        return(
+            <Button color="danger" size="sm" onClick={this.handleRemove}>Löschen</Button>
+        );
+    }
+
+    renderButtonsOnEdit() {
+        return(
+            <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} size="sm">
+                <DropdownToggle caret>
+                    Actions
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem onClick={this.handleSave}>Speichern</DropdownItem>
+                    <DropdownItem onClick={this.handleAbort}>Abbrechen</DropdownItem>
+                </DropdownMenu>
+            </ButtonDropdown>
+        );
+    }
+
+    toggleDropdown = () => {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
     }
 
     handleChange = name => event => {
@@ -105,7 +149,21 @@ class File extends Component {
     }
 
     handleRemove = () => {
-        this.removeFile();
+        if(this.state.doubleApprove) {
+            this.removeFile();
+        } else {
+            this.setState({
+                doubleApprove: true
+            });
+        }
+    }
+
+    handleTotalClick = () => {
+        if(this.state.doubleApprove) {
+            this.setState({
+                doubleApprove: false
+            });
+        }
     }
 
     async updateFile() {

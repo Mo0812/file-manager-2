@@ -16,6 +16,7 @@ class UserList extends Component {
         super(props);
 
         this.state = {
+            isLoading: true,
             user: [],
             new: false,
             alert: null
@@ -37,7 +38,7 @@ class UserList extends Component {
                         null
                 }
                 {
-                    this.state.user.length > 0 ?
+                    !this.state.isLoading ?
                         this.renderUserlist(this.state.user) :
                         this.renderLoadingScreen()
                 }
@@ -46,7 +47,7 @@ class UserList extends Component {
     }
 
     renderUserlist(user) {
-        return(
+        return (
             <Table striped responsive>
                 <thead>
                 <tr>
@@ -62,11 +63,13 @@ class UserList extends Component {
                 </thead>
                 <tbody>
                 {
-                    this.state.new ? <NewUser onCreation={this.addUser} onAbort={this.abortUser} onAlert={(color, message) => this.onAlert(color, message)}/> : null
+                    this.state.new ? <NewUser onCreation={this.addUser} onAbort={this.abortUser}
+                                              onAlert={(color, message) => this.onAlert(color, message)}/> : null
                 }
                 {
                     user.map((singleUser) => {
-                        return <User key={singleUser.id} data={singleUser} onRemove={this.refreshList} onAlert={(color, message) => this.onAlert(color, message)}/>
+                        return <User key={singleUser.id} data={singleUser} onRemove={this.refreshList}
+                                     onAlert={(color, message) => this.onAlert(color, message)}/>
                     })
                 }
                 </tbody>
@@ -76,8 +79,8 @@ class UserList extends Component {
 
     renderLoadingScreen() {
         return(
-            <div>
-                User get loaded
+            <div className="info-box">
+                <h3>User get loaded</h3>
             </div>
         );
     }
@@ -135,10 +138,14 @@ class UserList extends Component {
         let {status, json} = await API.user();
         if(status === 200) {
             this.setState({
-                user: json
+                user: json,
+                isLoading: false
             });
         } else {
-            // todo: ERROR HANDLING
+            this.setState({
+                user: [],
+                isLoading: false
+            });
         }
     }
 }

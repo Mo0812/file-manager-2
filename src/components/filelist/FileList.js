@@ -63,7 +63,7 @@ class FileList extends Component {
                         <th><FormattedMessage id="filelist.size"/></th>
                         <th className="w-25"><FormattedMessage id="filelist.viewedAt"/></th>
                         <th className="w-25"><FormattedMessage id="filelist.date"/></th>
-                        <th></th>
+                        <th className="functions center"></th>
                     </tr>
                     </thead>
                     <tbody>
