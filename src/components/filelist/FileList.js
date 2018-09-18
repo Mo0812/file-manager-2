@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button} from 'reactstrap';
+import {Table, Button, Alert} from 'reactstrap';
 import {FormattedMessage} from 'react-intl';
 import Dropzone from 'react-dropzone';
 
@@ -19,10 +19,11 @@ class FileList extends Component {
         this.state = {
             isLoading: true,
             files: [],
-            uploadFiles: [],
             dropzoneActive: false,
+            uploadFiles: [],
             filePreview: false,
-            filePreviewObject: null
+            filePreviewObject: null,
+            alert: null
         }
     }
 
@@ -39,6 +40,11 @@ class FileList extends Component {
                 <Dropzone className="fm-total-drop" onDrop={this.onDrop} onDragEnter={this.onDragEnter} onDragLeave={this.onDragLeave} disableClick>
                     {this.state.dropzoneActive && <div className="fm-drop-overlay"><FontAwesomeIcon icon={faDownload} className="fm-drop-icon"/></div>}
                     <h2><FormattedMessage id="filelist.title" /></h2>
+                    {
+                        this.state.alert !== null ?
+                            <Alert color={this.state.alert.color}>{this.state.alert.text}</Alert> :
+                            null
+                    }
                     {
                         !this.state.isLoading ?
                             this.renderFilelist(files) :
@@ -59,25 +65,27 @@ class FileList extends Component {
                         <th>id</th>
                         <th className="w-25"><FormattedMessage id="filelist.filename"/></th>
                         <th className="w-25"><FormattedMessage id="filelist.info"/></th>
-                        <th><FormattedMessage id="filelist.mime"/></th>
-                        <th><FormattedMessage id="filelist.size"/></th>
-                        <th className="w-25"><FormattedMessage id="filelist.viewedAt"/></th>
-                        <th className="w-25"><FormattedMessage id="filelist.date"/></th>
+                        <th className="center"><FormattedMessage id="filelist.mime"/></th>
+                        <th className="center"><FormattedMessage id="filelist.size"/></th>
+                        <th className="w-25 center"><FormattedMessage id="filelist.viewedAt"/></th>
+                        <th className="w-25 center"><FormattedMessage id="filelist.date"/></th>
                         <th className="functions center"></th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        files.map((file) => {
-                            return <File key={file.id} data={file} onRemove={this.refreshFileList}
-                                         onFilePreview={this.openFilePreview}/>
+                        this.state.uploadFiles.map((file) => {
+                            return <File key={file.name} data={{
+                                filename: file.name,
+                                size: file.size,
+                                mime: file.type
+                            }} preview={true}/>
                         })
                     }
                     {
-                        this.state.uploadFiles.map((file) => {
-                            return (
-                                <div>{file.name} - {file.size} bytes</div>
-                            );
+                        files.map((file) => {
+                            return <File key={file.id} data={file} onRemove={this.refreshFileList}
+                                         onFilePreview={this.openFilePreview} onAlert={(color, message) => this.onAlert(color, message)}/>
                         })
                     }
                     </tbody>
@@ -120,9 +128,28 @@ class FileList extends Component {
 
     onDrop = (files) => {
         this.setState({
-            uploadFiles: files,
-            dropzoneActive: false
+            dropzoneActive: false,
+            uploadFiles: files
         });
+        this.uploadFiles(files);
+    }
+
+    /*
+    ALERT
+     */
+
+    onAlert = (color, message) => {
+        this.setState({
+            alert: {
+                color: color,
+                text: message
+            }
+        });
+        setTimeout(() => {
+            this.setState({
+                alert: null
+            })
+        }, 5000);
     }
 
     /*
@@ -130,9 +157,6 @@ class FileList extends Component {
      */
 
     refreshFileList = () => {
-        this.setState({
-            isLoading: true
-        });
         this.fetchData();
     }
 
@@ -149,6 +173,18 @@ class FileList extends Component {
                 files: [],
                 isLoading: false
             });
+        }
+    }
+
+    async uploadFiles(files) {
+        let {status, json} = await API.uploadFile(files);
+        if(status === 200) {
+            this.setState({
+                uploadFiles: []
+            })
+            this.refreshFileList();
+        } else {
+            // todo: Error Handling
         }
     }
 

@@ -73,6 +73,26 @@ class API {
         return {status, json};
     }
 
+    static async uploadFile(files) {
+        let {username, password} = this.__getUser();
+
+        var formData = new FormData();
+        for(let file of files) {
+            formData.append(file.name, file);
+        }
+
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/file/upload', {
+            method: "POST",
+            headers: {
+                "Authorization": "Basic " + btoa(username + ":" + password),
+            },
+            body: formData
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json};
+    }
+
     static async user() {
         let {username, password} = this.__getUser();
 

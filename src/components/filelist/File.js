@@ -3,6 +3,9 @@ import filesize from "filesize/lib/filesize";
 import {Input, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button} from 'reactstrap';
 import API from '../../API';
 
+
+Date.prototype.isValid = d => !isNaN(Date.parse(d));
+
 class File extends Component {
     constructor(props) {
         super(props);
@@ -30,28 +33,42 @@ class File extends Component {
                     <td>{file.id}</td>
                     <td><Input type="text" value={this.state.filename} onChange={this.handleChange("filename")}/></td>
                     <td><Input type="text" value={this.state.info} onChange={this.handleChange("info")}/></td>
-                    <td>{this.translateMime(file.mime)}</td>
-                    <td>{filesize(file.size)}</td>
-                    <td><Input type="date" value={this.state.viewedAt} onChange={this.handleChange("viewedAt")}/></td>
-                    <td>{fDate.toLocaleDateString(navigator.language, localeOptions)}</td>
-                    <td>
+                    <td className="center">{this.translateMime(file.mime)}</td>
+                    <td className="center">{filesize(file.size)}</td>
+                    <td className="center"><Input type="date" value={this.state.viewedAt} onChange={this.handleChange("viewedAt")}/></td>
+                    <td className="center">{fDate.toLocaleDateString(navigator.language, localeOptions)}</td>
+                    <td className="center">
                         {
                             this.renderButtonsOnEdit()
                         }
                     </td>
                 </tr>
             );
+        } else if(this.props.preview) {
+            return (
+                <tr className="disabled">
+                    <td></td>
+                    <td>{this.state.filename}</td>
+                    <td></td>
+                    <td className="center">{this.translateMime(file.mime)}</td>
+                    <td className="center">{filesize(file.size)}</td>
+                    <td className="center">-</td>
+                    <td className="center">-</td>
+                    <td className="center">
+                    </td>
+                </tr>
+            )
         } else {
             return (
                 <tr onClick={this.handleTotalClick}>
                     <td>{file.id}</td>
-                    <td>{this.state.filename}</td>
+                    <td><a href={file.data} download={file.filename} target="_blank">{this.state.filename}</a></td>
                     <td>{this.state.info}</td>
-                    <td>{this.translateMime(file.mime)}</td>
-                    <td>{filesize(file.size)}</td>
-                    <td>{fViewDate.toLocaleDateString(navigator.language, localeOptions)}</td>
-                    <td>{fDate.toLocaleDateString(navigator.language, localeOptions)}</td>
-                    <td>
+                    <td className="center">{this.translateMime(file.mime)}</td>
+                    <td className="center">{filesize(file.size)}</td>
+                    <td className="center">{fViewDate.isValid(fViewDate) ? fViewDate.toLocaleDateString(navigator.language, localeOptions) : "-"}</td>
+                    <td className="center">{fDate.toLocaleDateString(navigator.language, localeOptions)}</td>
+                    <td className="center">
                         {
                             !this.state.doubleApprove ?
                                 this.renderButtonsDefault(file) :
@@ -70,7 +87,7 @@ class File extends Component {
                     Actions
                 </DropdownToggle>
                 <DropdownMenu>
-                    <DropdownItem><a href={file.data} download={file.filename}>Download</a></DropdownItem>
+                    <DropdownItem><a href={file.data} download target="_blank">Download</a></DropdownItem>
                     <DropdownItem onClick={this.handlePreview}>Vorschau</DropdownItem>
                     {
                         API.checkRight("admin") ?
@@ -181,16 +198,22 @@ class File extends Component {
         let {status, json} = await API.deleteFile(this.props.data.id);
         if(status === 200 && json.hasOwnProperty("FMSuccess")) {
             this.props.onRemove();
+            this.props.onAlert("danger", "Datei gelöscht");
         } else {
             // todo: Error Handling
         }
     }
 
     translateMime(mime) {
-        let mimeTypes = {
-            'application/pdf': 'pdf'
-        };
-        return mimeTypes[mime];
+        switch(mime) {
+            case 'application/pdf':
+                return 'pdf';
+            case 'image/jpg':
+            case 'image/jpeg':
+                return 'jpg';
+            default:
+                return mime;
+        }
     }
 }
 

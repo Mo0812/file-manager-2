@@ -22,6 +22,10 @@
     border-top: none;
 }
 
+.fm-filelist .table tr.disabled {
+    color: #ccc;
+}
+
 .fm-filelist .table .center {
     text-align: center;
 }
