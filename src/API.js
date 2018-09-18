@@ -145,6 +145,24 @@ class API {
         return {status, json};
     }
 
+    static async changePassword(newPass) {
+        let {username, password} = this.__getUser();
+
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/password/change', {
+            method: "PUT",
+            headers: {
+                "Authorization": "Basic " + btoa(username + ":" + password),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "new_pass": newPass
+            })
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json}
+    }
+
     static async resetPassword(id) {
         let {username, password} = this.__getUser();
 
@@ -164,7 +182,6 @@ class API {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
-
             },
             body: JSON.stringify({
                 "email": email

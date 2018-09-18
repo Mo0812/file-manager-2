@@ -26,6 +26,10 @@
   "menu.user.contact": "Kontakt",
   "menu.logout": "Abmelden",
 
+  "changepassword.title": "Passwort ändern",
+  "changepassword.change": "Ändern",
+  "changepassword.cancel": "Abbrechen",
+
   "login.username": "Benutzername",
   "login.email": "Email",
   "login.password": "Passwort",

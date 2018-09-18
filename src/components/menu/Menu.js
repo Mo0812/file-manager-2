@@ -15,6 +15,7 @@ import {Collapse,
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
 import API from '../../API';
+import ChangePassword from '../changepassword/ChangePassword';
 
 import './Menu.css';
 
@@ -23,7 +24,8 @@ class Menu extends Component {
         super(props);
 
         this.state = {
-            isOpen: false
+            isOpen: false,
+            isChangePasswordOpen: false
         };
     }
 
@@ -50,7 +52,7 @@ class Menu extends Component {
                                 <FontAwesomeIcon icon={faUserAstronaut}/> {API.getUsername()}
                             </DropdownToggle>
                             <DropdownMenu right>
-                                <DropdownItem>
+                                <DropdownItem onClick={this.openChangePassword}>
                                     <FormattedMessage id="menu.user.changepassword"/>
                                 </DropdownItem>
                                 <DropdownItem divider />
@@ -66,6 +68,7 @@ class Menu extends Component {
                         </Nav>
                     </Collapse>
                 </Navbar>
+                <ChangePassword open={this.state.isChangePasswordOpen} close={this.closeChangePassword}/>
             </div>
         );
     }
@@ -73,6 +76,18 @@ class Menu extends Component {
     toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
+        });
+    }
+
+    openChangePassword = () => {
+        this.setState({
+            isChangePasswordOpen: true
+        });
+    }
+
+    closeChangePassword = () => {
+        this.setState({
+            isChangePasswordOpen: false
         });
     }
 }
