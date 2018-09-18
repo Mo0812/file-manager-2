@@ -31,7 +31,15 @@ class UserList extends Component {
     render() {
         return (
             <section className="fm-userlist">
-                <h2><FormattedMessage id="userlist.title" />{' '}<Button onClick={this.newUser} color="secondary"><FontAwesomeIcon icon={faPlus}/></Button></h2>
+                <h2>
+                    <FormattedMessage id="userlist.title" />
+                    {' '}
+                    {
+                        API.checkRight("admin") ?
+                            <Button onClick={this.newUser} color="secondary"><FontAwesomeIcon icon={faPlus}/></Button> :
+                            null
+                    }
+                </h2>
                 {
                     this.state.alert !== null ?
                         <Alert color={this.state.alert.color}>{this.state.alert.text}</Alert> :
@@ -47,34 +55,44 @@ class UserList extends Component {
     }
 
     renderUserlist(user) {
-        return (
-            <Table striped responsive>
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th className="w-25"><FormattedMessage id="userlist.username"/></th>
-                    <th className="w-25"><FormattedMessage id="userlist.fullname"/></th>
-                    <th className="w-25"><FormattedMessage id="userlist.email"/></th>
-                    <th className="w-25 center"><FormattedMessage id="userlist.rights"/></th>
-                    <th className="center"><FormattedMessage id="userlist.last_action"/></th>
-                    <th className="center"><FormattedMessage id="userlist.expires"/></th>
-                    <th className="functions center"></th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    this.state.new ? <NewUser onCreation={this.addUser} onAbort={this.abortUser}
-                                              onAlert={(color, message) => this.onAlert(color, message)}/> : null
-                }
-                {
-                    user.map((singleUser) => {
-                        return <User key={singleUser.id} data={singleUser} onRemove={this.refreshList}
-                                     onAlert={(color, message) => this.onAlert(color, message)}/>
-                    })
-                }
-                </tbody>
-            </Table>
-        );
+        if(user.length > 0) {
+            return (
+                <Table striped responsive>
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th className="w-25"><FormattedMessage id="userlist.username"/></th>
+                        <th className="w-25"><FormattedMessage id="userlist.fullname"/></th>
+                        <th className="w-25"><FormattedMessage id="userlist.email"/></th>
+                        <th className="w-25 center"><FormattedMessage id="userlist.rights"/></th>
+                        <th className="center"><FormattedMessage id="userlist.last_action"/></th>
+                        <th className="center"><FormattedMessage id="userlist.expires"/></th>
+                        <th className="functions center"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.new ? <NewUser onCreation={this.addUser} onAbort={this.abortUser}
+                                                  onAlert={(color, message) => this.onAlert(color, message)}/> : null
+                    }
+                    {
+                        user.map((singleUser) => {
+                            return <User key={singleUser.id} data={singleUser} onRemove={this.refreshList}
+                                         onAlert={(color, message) => this.onAlert(color, message)}/>
+                        })
+                    }
+                    </tbody>
+                </Table>
+            );
+        } else {
+            return (
+                <div className="info-box">
+                    <h3 className="">Es wurden momentan leider keine Benutzer gefunden.</h3>
+                    <p>Durch aktualisieren des Browsers oder Klicken auf den Button können Sie die Daten erneut anfordern.</p>
+                    <Button color="secondary" onClick={this.refreshList}>Aktualisieren</Button>
+                </div>
+            );
+        }
     }
 
     renderLoadingScreen() {
