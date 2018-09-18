@@ -191,6 +191,22 @@ class API {
         let json = await response.json();
         return {status, json}
     }
+
+    static async contact(email, message) {
+        let response = await fetch('https://moritzkanzler.de/filemanager-rest/contact', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "from": email,
+                "message": message
+            })
+        });
+        let status = await response.status;
+        let json = await response.json();
+        return {status, json}
+    }
 }
 
 export default API;

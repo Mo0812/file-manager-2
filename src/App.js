@@ -7,6 +7,7 @@ import API from './API';
 
 import Login from './components/login/Login';
 import ForgotPassword from './components/forgotpassword/ForgotPassword';
+import Contact from './components/contact/Contact';
 import Menu from './components/menu/Menu';
 import FileList from './components/filelist/FileList';
 import UserList from "./components/userlist/UserList";
@@ -61,6 +62,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={() => <Login onClick={this.handleLoginButton}/>} />
                         <Route path="/forgotpassword" component={ForgotPassword} />
+                        <Route path="/contact" component={Contact} />
                         <Route path="*" component={() => <Login onClick={this.handleLoginButton}/>} />
                     </Switch>
                 </BrowserRouter>

@@ -47,7 +47,7 @@ class ForgotPassword extends Component {
         return(
             <div>
             <FormGroup row>
-                <Label for="username" sm={3}><FormattedMessage id="login.email"/></Label>
+                <Label for="email" sm={3}><FormattedMessage id="login.email"/></Label>
                 <Col sm={9}>
                     <Input id="email" name="email" placeholder="name@example.com" onChange={this.handleChange("email")}/>
                 </Col>

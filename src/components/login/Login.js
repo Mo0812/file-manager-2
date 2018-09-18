@@ -37,7 +37,7 @@ class Login extends Component {
                     <Button color="success" className="fm-outside-content-submit" onClick={this.handleLogin}><FormattedMessage id="login.submit"/></Button>
                     <FormGroup>
                         <FormText><Link to="/forgotpassword"><FormattedMessage id="login.forgotpassword"/></Link></FormText>
-                        <FormText><Link to="/"><FormattedMessage id="login.contact"/></Link></FormText>
+                        <FormText><Link to="/contact"><FormattedMessage id="login.contact"/></Link></FormText>
                     </FormGroup>
                 </Form>
             </section>
