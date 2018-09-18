@@ -90,7 +90,7 @@ class User extends Component {
 
     renderButtonsOnRemove() {
         return(
-            <Button color="danger" size="sm">Löschen</Button>
+            <Button color="danger" size="sm" onClick={this.handleRemove}>Löschen</Button>
         );
     }
 
