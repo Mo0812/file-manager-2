@@ -19,6 +19,7 @@ class User extends Component {
             firstname: this.props.data.firstname,
             lastname: this.props.data.lastname,
             email: this.props.data.email,
+            rights: this.props.data.rights,
             boomDate: this.props.data.boom_date
         }
     }
@@ -38,8 +39,8 @@ class User extends Component {
                     <td><Input type="text" value={this.state.firstname} onChange={this.handleChange("firstname")}/>{' '}<Input type="text" value={this.state.lastname} onChange={this.handleChange("lastname")}/></td>
                     <td><Input type="text" value={this.state.email} onChange={this.handleChange("email")}/></td>
                     <td className="center">
-                        <Input type="select">
-                            <option value="admin">Admin</option>
+                        <Input type="select" onChange={this.handleChange("rights")} value={this.state.rights}>
+                            <option value="admin">Administrator</option>
                             <option value="user">Teilnehmer</option>
                         </Input>
                     </td>
@@ -57,7 +58,7 @@ class User extends Component {
                     <td>{user.username}</td>
                     <td>{this.state.firstname + " " + this.state.lastname}</td>
                     <td>{this.state.email}</td>
-                    <td className="center">{user.rights}</td>
+                    <td className="center">{this.translateRights(this.state.rights)}</td>
                     <td className="center">{fLastAction.isValid(fLastAction) ? fLastAction.toLocaleDateString(navigator.language, localeOptions) : "-"}</td>
                     <td className="center">{fBoomDate.isValid(fBoomDate) ? fBoomDate.toLocaleDateString(navigator.language, localeOptions) : "-"}</td>
                     <td className="center">
@@ -158,8 +159,17 @@ class User extends Component {
         }
     }
 
+    translateRights(right) {
+        switch(right) {
+            case 'admin':
+                return 'Administrator';
+            case 'user':
+                return 'Teilnehmer';
+        }
+    }
+
     async updateUser() {
-        let {status, json} = await API.changeUser(this.props.data.id, this.state.firstname, this.state.lastname, this.state.email, this.props.data.rights, this.state.boomDate);
+        let {status, json} = await API.changeUser(this.props.data.id, this.state.firstname, this.state.lastname, this.state.email, this.state.rights, this.state.boomDate);
         if(status == 200 && json.hasOwnProperty("FMSuccess")) {
             this.setState({
                 edit: false
