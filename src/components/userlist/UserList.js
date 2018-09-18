@@ -62,7 +62,7 @@ class UserList extends Component {
                 </thead>
                 <tbody>
                 {
-                    this.state.new ? <NewUser onCreation={this.addUser} onAbort={this.abortUser}/> : null
+                    this.state.new ? <NewUser onCreation={this.addUser} onAbort={this.abortUser} onAlert={(color, message) => this.onAlert(color, message)}/> : null
                 }
                 {
                     user.map((singleUser) => {
