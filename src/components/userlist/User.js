@@ -181,7 +181,7 @@ class User extends Component {
     async resetPassword() {
         let {status, json} = await API.resetPassword(this.props.data.id);
         if(status == 200 && json.hasOwnProperty("FMSuccess")) {
-            this.props.onRemove();
+            this.props.onAlert("success", "Passwort erfolgreich zurückgesetzt");
         } else {
             // todo: Error Handling
         }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Table, Button} from 'reactstrap';
+import {Alert, Table, Button} from 'reactstrap';
 import {FormattedMessage} from 'react-intl';
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -17,7 +17,8 @@ class UserList extends Component {
 
         this.state = {
             user: [],
-            new: false
+            new: false,
+            alert: null
         }
     }
 
@@ -30,6 +31,11 @@ class UserList extends Component {
         return (
             <section className="fm-userlist">
                 <h2><FormattedMessage id="userlist.title" />{' '}<Button onClick={this.newUser} color="secondary"><FontAwesomeIcon icon={faPlus}/></Button></h2>
+                {
+                    this.state.alert !== null ?
+                        <Alert color={this.state.alert.color}>{this.state.alert.text}</Alert> :
+                        null
+                }
                 {
                     this.state.user.length > 0 ?
                         this.renderUserlist(this.state.user) :
@@ -60,7 +66,7 @@ class UserList extends Component {
                 }
                 {
                     user.map((singleUser) => {
-                        return <User key={singleUser.id} data={singleUser} onRemove={this.refreshList}/>
+                        return <User key={singleUser.id} data={singleUser} onRemove={this.refreshList} onAlert={(color, message) => this.onAlert(color, message)}/>
                     })
                 }
                 </tbody>
@@ -97,6 +103,24 @@ class UserList extends Component {
         this.setState({
             new: false
         });
+    }
+
+    /*
+    ALERT
+     */
+
+    onAlert = (color, message) => {
+        this.setState({
+            alert: {
+                color: color,
+                text: message
+            }
+        });
+        setTimeout(() => {
+            this.setState({
+                alert: null
+            })
+        }, 5000);
     }
 
     /*
