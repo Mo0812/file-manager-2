@@ -161,7 +161,7 @@ class API {
 
     static async forgotPasswort(email) {
         let response = await fetch('https://moritzkanzler.de/filemanager-rest/password/forgot', {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
 
