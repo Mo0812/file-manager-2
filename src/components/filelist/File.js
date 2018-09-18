@@ -24,7 +24,7 @@ class File extends Component {
         let fDate = new Date(Date.parse(file.date));
         let fViewDate = new Date(Date.parse(this.state.viewedAt));
 
-        if(this.state.edit) {
+        if(this.state.edit && API.checkRight("admin")) {
             return (
                 <tr>
                     <td>{file.id}</td>
@@ -53,8 +53,18 @@ class File extends Component {
                     <td>
                         <a href={file.data} download={file.filename}><FontAwesomeIcon icon={faDownload} onClick={this.handleDownload}/></a>
                         <FontAwesomeIcon icon={faEye} onClick={this.handlePreview}/>
-                        <FontAwesomeIcon icon={faPen} onClick={this.handleEdit}/>
-                        <FontAwesomeIcon icon={faTrashAlt} onClick={this.handleRemove}/>
+                        {
+                            API.checkRight("admin") ?
+                                (
+                                    <FontAwesomeIcon icon={faPen} onClick={this.handleEdit}/>
+                                ) : ""
+                        }
+                        {
+                            API.checkRight("admin") ?
+                                (
+                                    <FontAwesomeIcon icon={faTrashAlt} onClick={this.handleRemove}/>
+                                ) : ""
+                        }
                     </td>
                 </tr>
             );

@@ -42,9 +42,17 @@ class Menu extends Component {
                             <NavItem>
                                 <NavLink href="/filelist" active={ currentPath == "filelist" ? true : false }><FormattedMessage id="menu.filelist"/></NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink href="/userlist" active={ currentPath == "userlist" ? true : false }><FormattedMessage id="menu.userlist"/></NavLink>
-                            </NavItem>
+                            {
+                                API.checkRight("admin") ?
+                                    (
+                                        <NavItem>
+                                            <NavLink href="/userlist"
+                                                     active={currentPath == "userlist" ? true : false}><FormattedMessage
+                                                id="menu.userlist"/></NavLink>
+                                        </NavItem>
+                                    ) : ""
+                            }
+
                         </Nav>
                         <Nav navbar className="user-navigation">
                         <UncontrolledDropdown nav inNavbar>

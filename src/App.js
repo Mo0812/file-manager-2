@@ -73,6 +73,7 @@ class App extends Component {
     async handleAuth() {
         let {status, json} = await API.auth();
         if(status === 200) {
+            localStorage.setItem("rights", json.rights);
             localStorage.setItem("isLoggedIn", true);
             this.setState({
                 isLoggedIn: true
@@ -80,6 +81,7 @@ class App extends Component {
         } else {
             localStorage.removeItem("username");
             localStorage.removeItem("password");
+            localStorage.removeItem("rights");
         }
     }
 
@@ -87,6 +89,7 @@ class App extends Component {
         localStorage.setItem("isLoggedIn", false);
         localStorage.removeItem("username");
         localStorage.removeItem("password");
+        localStorage.removeItem("rights");
         this.setState({
             isLoggedIn: false
         });

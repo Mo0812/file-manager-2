@@ -35,3 +35,14 @@ main.main .container-fluid, main.main .container {
 .fm-outside-container .fm-outside-content .fm-outside-content-submit {
     margin: 5px 0 15px 0;
 }
+
+.info-box {
+    margin: 0 auto;
+    margin-top: 4rem;
+    width: 50vw;
+    background-color: #f0f0f0;
+    padding: 1rem 1.2rem;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}

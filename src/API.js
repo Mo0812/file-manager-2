@@ -207,6 +207,10 @@ class API {
         let json = await response.json();
         return {status, json}
     }
+
+    static checkRight(level) {
+        return localStorage.getItem("rights") === level;
+    }
 }
 
 export default API;

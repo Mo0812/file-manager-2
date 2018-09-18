@@ -83,6 +83,9 @@ class ChangePassword extends React.Component {
     }
 
     close = () => {
+        this.setState({
+            passwordChanged: false
+        });
         this.props.close();
     }
 
