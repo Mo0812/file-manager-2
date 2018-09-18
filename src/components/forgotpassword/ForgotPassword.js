@@ -69,7 +69,7 @@ class ForgotPassword extends Component {
 
     async forgotPassword() {
         let {status, json} = await API.forgotPasswort(this.state.email);
-        if(status == 200 && json.status == "AuthSuccess") {
+        if(status === 200 && json.status === "AuthSuccess") {
             this.setState({
                 successful: true
             });

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Container, Col, Jumbotron, Form, FormGroup, FormText, Button, Input, Label} from 'reactstrap';
+import { Col, Form, FormGroup, FormText, Button, Input, Label} from 'reactstrap';
 import {FormattedMessage} from 'react-intl';
 import sha1 from 'sha1';
 

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button} from 'reactstrap';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPen, faSave, faTrashAlt, faBan} from "@fortawesome/free-solid-svg-icons";
 import {Input} from "reactstrap";
 
 import API from '../../API';
@@ -165,12 +163,14 @@ class User extends Component {
                 return 'Administrator';
             case 'user':
                 return 'Teilnehmer';
+            default:
+                return 'Teilnehmer';
         }
     }
 
     async updateUser() {
         let {status, json} = await API.changeUser(this.props.data.id, this.state.firstname, this.state.lastname, this.state.email, this.state.rights, this.state.boomDate);
-        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+        if(status === 200 && json.hasOwnProperty("FMSuccess")) {
             this.setState({
                 edit: false
             });
@@ -181,7 +181,7 @@ class User extends Component {
 
     async removeUser() {
         let {status, json} = await API.deleteUser(this.props.data.id);
-        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+        if(status === 200 && json.hasOwnProperty("FMSuccess")) {
             this.props.onRemove();
             this.props.onAlert("danger", "Benutzer erfolgreich gelöscht");
         } else {
@@ -191,7 +191,7 @@ class User extends Component {
 
     async resetPassword() {
         let {status, json} = await API.resetPassword(this.props.data.id);
-        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+        if(status === 200 && json.hasOwnProperty("FMSuccess")) {
             this.props.onAlert("success", "Passwort erfolgreich zurückgesetzt");
         } else {
             // todo: Error Handling

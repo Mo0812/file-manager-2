@@ -40,14 +40,14 @@ class Menu extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="mr-auto" navbar>
                             <NavItem>
-                                <NavLink href="/filelist" active={ currentPath == "filelist" ? true : false }><FormattedMessage id="menu.filelist"/></NavLink>
+                                <NavLink href="/filelist" active={ currentPath === "filelist" ? true : false }><FormattedMessage id="menu.filelist"/></NavLink>
                             </NavItem>
                             {
                                 API.checkRight("admin") ?
                                     (
                                         <NavItem>
                                             <NavLink href="/userlist"
-                                                     active={currentPath == "userlist" ? true : false}><FormattedMessage
+                                                     active={currentPath === "userlist" ? true : false}><FormattedMessage
                                                 id="menu.userlist"/></NavLink>
                                         </NavItem>
                                     ) : ""

@@ -5,10 +5,6 @@ import {FormattedMessage} from 'react-intl';
 import './FilePreview.css';
 
 class FilePreview extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let file = this.props.data;
         return (

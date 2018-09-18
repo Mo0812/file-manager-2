@@ -69,7 +69,7 @@ class NewUser extends Component {
 
     async createUser() {
         let {status, json} = await API.createUser(this.state.firstname, this.state.lastname, this.state.email, 'admin', this.state.boomDate);
-        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+        if(status === 200 && json.hasOwnProperty("FMSuccess")) {
             this.props.onCreation();
             this.props.onAlert("success", "Neuer Benutzer erfolgreich angelegt.");
         } else {

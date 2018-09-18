@@ -75,7 +75,7 @@ class Contact extends Component {
 
     async sendMessage() {
         let {status, json} = await API.contact(this.state.email, this.state.message);
-        if(status == 200 && json.status == "ContactSuccess") {
+        if(status === 200 && json.status === "ContactSuccess") {
             this.setState({
                 successful: true
             });

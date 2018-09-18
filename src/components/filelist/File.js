@@ -168,7 +168,7 @@ class File extends Component {
 
     async updateFile() {
         let {status, json} = await API.changeFile(this.props.data.id, this.state.filename, this.state.info, this.state.viewedAt);
-        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+        if(status === 200 && json.hasOwnProperty("FMSuccess")) {
             this.setState({
                 edit: false
             });
@@ -179,7 +179,7 @@ class File extends Component {
 
     async removeFile() {
         let {status, json} = await API.deleteFile(this.props.data.id);
-        if(status == 200 && json.hasOwnProperty("FMSuccess")) {
+        if(status === 200 && json.hasOwnProperty("FMSuccess")) {
             this.props.onRemove();
         } else {
             // todo: Error Handling
