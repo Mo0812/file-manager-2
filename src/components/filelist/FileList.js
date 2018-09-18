@@ -127,11 +127,17 @@ class FileList extends Component {
     }
 
     onDrop = (files) => {
-        this.setState({
-            dropzoneActive: false,
-            uploadFiles: files
-        });
-        this.uploadFiles(files);
+        if(API.checkRight("admin")) {
+            this.setState({
+                dropzoneActive: false,
+                uploadFiles: files
+            });
+            this.uploadFiles(files);
+        } else {
+            this.setState({
+                dropzoneActive: false
+            });
+        }
     }
 
     /*
