@@ -11,6 +11,7 @@ import Contact from './components/contact/Contact';
 import Menu from './components/menu/Menu';
 import FileList from './components/filelist/FileList';
 import UserList from "./components/userlist/UserList";
+import Settings from "./components/settings/Settings";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -44,6 +45,7 @@ class App extends Component {
                             <Route exact path="/" component={FileList} />
                             <Route path="/filelist" component={FileList} />
                             <Route path="/userlist" component={UserList} />
+                            <Route path="/settings" component={Settings} />
                             <Route path="*" component={FileList} />
                         </Switch>
                     </BrowserRouter>

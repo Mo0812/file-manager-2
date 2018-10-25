@@ -10,6 +10,14 @@
   "filepreview.title": "Dateivorschau",
   "filepreview.cancel": "Beenden",
 
+  "file.actions": "Aktionen",
+  "file.actions.download": "Dowload",
+  "file.actions.preview": "Vorschau",
+  "file.actions.edit": "Bearbeiten",
+  "file.actions.remove": "Löschen",
+  "file.actions.save": "Speichern",
+  "file.actions.cancel": "Abbrechen",
+
   "userlist.title": "Benutzer",
   "userlist.username": "Benutzername",
   "userlist.fullname": "Name",
@@ -19,12 +27,16 @@
   "userlist.last_action": "zuletzt aktiv",
   "userlist.expires": "Auslaufdatum",
 
+  "settings.title": "Einstellungen",
+
   "menu.filelist": "Dateien",
   "menu.userlist": "Benutzer",
+  "menu.settings": "Einstellungen",
   "menu.user.changepassword": "Passwort ändern",
   "menu.user.faq": "FAQ",
   "menu.user.contact": "Kontakt",
   "menu.logout": "Abmelden",
+
 
   "changepassword.title": "Passwort ändern",
   "changepassword.change": "Ändern",

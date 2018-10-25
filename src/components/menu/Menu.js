@@ -44,15 +44,20 @@ class Menu extends Component {
                             </NavItem>
                             {
                                 API.checkRight("admin") ?
-                                    (
-                                        <NavItem>
-                                            <NavLink href="/userlist"
-                                                     active={currentPath === "userlist" ? true : false}><FormattedMessage
-                                                id="menu.userlist"/></NavLink>
-                                        </NavItem>
-                                    ) : ""
+                                (
+                                    <NavItem>
+                                        <NavLink href="/userlist" active={currentPath === "userlist" ? true : false}><FormattedMessage id="menu.userlist"/></NavLink>
+                                    </NavItem>
+                                ) : ""
                             }
-
+                            {
+                                API.checkRight("admin") ?
+                                (
+                                    <NavItem>
+                                        <NavLink href="/settings" active={currentPath === "settings" ? true : false}><FormattedMessage id="menu.settings" /></NavLink>
+                                    </NavItem>
+                                ) : ""
+                            }
                         </Nav>
                         <Nav navbar className="user-navigation">
                         <UncontrolledDropdown nav inNavbar>

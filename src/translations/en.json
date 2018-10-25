@@ -6,6 +6,8 @@
   "filelist.size": "size",
   "filelist.viewedAt": "published at",
   "filelist.date": "uploaded at",
+  
+  "file.actions": "Actions",
 
   "menu.filelist": "Files",
   "menu.userlist": "User",

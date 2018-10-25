@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import filesize from "filesize/lib/filesize";
 import {Input, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button} from 'reactstrap';
+import {FormattedMessage} from 'react-intl';
 import API from '../../API';
 
 
@@ -84,21 +85,24 @@ class File extends Component {
         return(
             <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} size="sm">
                 <DropdownToggle caret>
-                    Actions
+                    <FormattedMessage id="file.actions" />
                 </DropdownToggle>
                 <DropdownMenu>
-                    <DropdownItem><a href={file.data} download target="_blank">Download</a></DropdownItem>
-                    <DropdownItem onClick={this.handlePreview}>Vorschau</DropdownItem>
+                    <DropdownItem><a href={file.data} download target="_blank"><FormattedMessage
+                     id="file.actions.download" /></a></DropdownItem>
+                    <DropdownItem onClick={this.handlePreview}><FormattedMessage
+                     id="file.actions.preview" /></DropdownItem>
                     {
                         API.checkRight("admin") ?
                             (
-                                <DropdownItem onClick={this.handleEdit}>Bearbeiten</DropdownItem>
+                                <DropdownItem onClick={this.handleEdit}><FormattedMessage id="file.actions.edit" /></DropdownItem>
                             ) : ""
                     }
                     {
                         API.checkRight("admin") ?
                             (
-                                <DropdownItem onClick={this.handleRemove}>Löschen</DropdownItem>
+                                <DropdownItem onClick={this.handleRemove}><FormattedMessage
+                                id="file.actions.remove" /></DropdownItem>
                             ) : ""
                     }
                 </DropdownMenu>
@@ -108,7 +112,8 @@ class File extends Component {
 
     renderButtonsOnRemove() {
         return(
-            <Button color="danger" size="sm" onClick={this.handleRemove}>Löschen</Button>
+            <Button color="danger" size="sm" onClick={this.handleRemove}><FormattedMessage
+            id="file.actions.remove" /></Button>
         );
     }
 
@@ -116,11 +121,11 @@ class File extends Component {
         return(
             <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown} size="sm">
                 <DropdownToggle caret>
-                    Actions
+                <FormattedMessage id="file.actions" />
                 </DropdownToggle>
                 <DropdownMenu>
-                    <DropdownItem onClick={this.handleSave}>Speichern</DropdownItem>
-                    <DropdownItem onClick={this.handleAbort}>Abbrechen</DropdownItem>
+                    <DropdownItem onClick={this.handleSave}><FormattedMessage id="file.actions.save" /></DropdownItem>
+                    <DropdownItem onClick={this.handleAbort}><FormattedMessage id="file.actions.cancel" /></DropdownItem>
                 </DropdownMenu>
             </ButtonDropdown>
         );
